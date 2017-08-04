@@ -1,0 +1,14 @@
+[Unit]
+Description=Common Address Redundancy Protocol daemon on %I
+After=syslog.target network-online.target
+Wants=network-online.target
+
+[Service]
+PrivateTmp=true
+Type=forking
+PIDFile=/var/tmp/%i.pid
+ExecStart=/usr/libexec/ucarp/ucarp %i
+Restart=on-failure
+
+[Install]
+WantedBy=ucarp.service

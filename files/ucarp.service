@@ -1,0 +1,15 @@
+[Unit]
+Description=Common Address Redundancy Protocol master service
+After=syslog.target network-online.target
+Wants=network-online.target
+
+# This non-service merely exists so that all ucarp services can be started and
+# stopped at the same time.
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c 'echo "starting ucarp service"'
+ExecStop=/bin/bash -c 'echo "stopping ucarp service"'
+
+[Install]
+WantedBy=multi-user.target

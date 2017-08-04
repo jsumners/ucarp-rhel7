@@ -1,0 +1,49 @@
+#!/bin/bash
+
+LOGGER="/usr/bin/logger -p daemon.notice -t ucarp"
+
+VIP=$1
+if [ -z ${VIP} ]; then
+  ${LOGGER} "missing VIP as first parameter"
+  exit 1
+fi
+
+CONF=/etc/ucarp/vip-${VIP}.conf
+if [ ! -f ${CONF} ]; then
+  ${LOGGER} "missing ${CONF}"
+  exit 1
+fi
+
+[ -f /etc/ucarp/vip-common.conf ] && source /etc/ucarp/vip-common.conf
+source ${CONF}
+
+TMP_RETVAL=0
+if [ -z "${PASSWORD}" ]; then
+  ${LOGGER} "no PASSWORD found for ${CONF}"
+  TMP_RETVAL=1
+fi
+if [ -z "${BIND_INTERFACE}" ]; then
+  ${LOGGER} "no BIND_INTERFACE found for ${CONF}"
+  TMP_RETVAL=1
+fi
+if [ -z "${SOURCE_ADDRESS}" ]; then
+  ${LOGGER} "no SOURCE_ADDRESS found for ${CONF}"
+  TMP_RETVAL=1
+fi
+if [ -z "${VIP_ADDRESS}" ]; then
+  ${LOGGER} "no VIP_ADDRESS found for ${CONF}"
+  TMP_RETVAL=1
+fi
+if [ -z "${VID}" ]; then
+  ${LOGGER} "no VID found for ${CONF}"
+fi
+
+if [ ${TMP_RETVAL} -ne 0 ]; then
+  exit 1
+fi
+
+exec /usr/sbin/ucarp --interface=${BIND_INTERFACE} --pass=${PASSWORD} \
+  --srcip=${SOURCE_ADDRESS} --vhid=${VID} --addr=${VIP_ADDRESS} \
+  ${OPTIONS} \
+  --upscript=${UPSCRIPT} --downscript=${DOWNSCRIPT} \
+  --pidfile=/var/tmp/${VIP}.pid

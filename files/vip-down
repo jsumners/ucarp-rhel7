@@ -1,0 +1,4 @@
+#!/bin/sh
+exec 2>/dev/null
+
+/sbin/ip address del "$2"/32 dev "$1"

@@ -1,0 +1,14 @@
+# Virtual IP configuration file for UCARP
+# The "unique_id" in the file name correlates to the service name passed to
+# systemd. For example, if the service is "ucarp@foo.service" then the file you
+# are reading should be copied to "/etc/ucarp/vip-foo.conf".
+
+# The identifier, between 1 and 255, passed to ucarp to identify this VIP.
+VID=1
+
+# In the simple scenario, you want a single virtual IP address from the _same_
+# network to be taken over by one of the routers.
+VIP_ADDRESS="10.0.0.254"
+
+# In more complex scenarios, check the "vip-common" file for values to override
+# and how to add options.
