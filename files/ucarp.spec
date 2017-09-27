@@ -3,7 +3,7 @@
 Summary: Common Address Redundancy Protocol (CARP) for Unix
 Name: ucarp-jbs
 Version: 1.5.2
-Release: 4%{?dist}
+Release: 5%{?dist}
 # See the COPYING file which details everything
 License: MIT and BSD
 URL: http://www.ucarp.org/

@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 PrivateTmp=true
-Type=forking
+#Type=forking
 PIDFile=/var/tmp/%i.pid
 ExecStart=/usr/libexec/ucarp/ucarp %i
 Restart=on-failure
