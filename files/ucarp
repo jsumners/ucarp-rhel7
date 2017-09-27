@@ -27,8 +27,8 @@ if [ ! -z "${PASSFILE}" ]; then
     ${LOGGER} "could not find PASSFILE ${PASSFILE}"
     TMP_RETVAL=1
   else
-    PASSWORD=$(cat ${PASSFILE}
-  fi)
+    PASSWORD=$(cat ${PASSFILE})
+  fi
 fi
 if [ -z "${BIND_INTERFACE}" ]; then
   ${LOGGER} "no BIND_INTERFACE found for ${CONF}"
