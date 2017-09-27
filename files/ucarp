@@ -18,9 +18,17 @@ fi
 source ${CONF}
 
 TMP_RETVAL=0
-if [ -z "${PASSWORD}" ]; then
+if [ -z "${PASSWORD}" -a -z "${PASSFILE}" ]; then
   ${LOGGER} "no PASSWORD found for ${CONF}"
   TMP_RETVAL=1
+fi
+if [ ! -z "${PASSFILE}" ]; then
+  if [ ! -f ${PASSFILE} ]; then
+    ${LOGGER} "could not find PASSFILE ${PASSFILE}"
+    TMP_RETVAL=1
+  else
+    PASSWORD=$(cat ${PASSFILE}
+  fi)
 fi
 if [ -z "${BIND_INTERFACE}" ]; then
   ${LOGGER} "no BIND_INTERFACE found for ${CONF}"
@@ -36,6 +44,7 @@ if [ -z "${VIP_ADDRESS}" ]; then
 fi
 if [ -z "${VID}" ]; then
   ${LOGGER} "no VID found for ${CONF}"
+  TMP_RETVAL=1
 fi
 
 if [ ${TMP_RETVAL} -ne 0 ]; then
