@@ -1,7 +1,7 @@
 [Unit]
 Description=Common Address Redundancy Protocol daemon on %I
-After=syslog.target network-online.target
-Wants=network-online.target
+After=ucarp.service
+BindTo=ucarp.service
 
 [Service]
 PrivateTmp=true
